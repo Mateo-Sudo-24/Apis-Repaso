@@ -1,0 +1,54 @@
+<!-- Muestra un spinner de carga mientras se obtienen los datos -->
+<div *ngIf="isLoading" class="ion-text-center ion-padding">
+  <ion-spinner name="crescent"></ion-spinner>
+</div>
+
+<!-- Muestra un mensaje de error si la petición falla -->
+<ion-card *ngIf="error" color="danger">
+  <ion-card-header>
+    <ion-card-title>Error de API</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    {{ error }}
+  </ion-card-content>
+</ion-card>
+
+<!-- Muestra la tarjeta con los datos solo si no hay carga y no hay error -->
+<ion-card *ngIf="!isLoading && !error && data">
+  <ion-card-content>
+    <!-- Template para Chistes -->
+    <ng-container *ngIf="api === 'joke'">
+      <p>{{ data.joke || (data.setup + ' - ' + data.delivery) }}</p>
+    </ng-container>
+
+    <!-- Template para Gatos o Perros -->
+    <ng-container *ngIf="api === 'cat' || api === 'dog'">
+      <ion-img [src]="data.url || data.message"></ion-img>
+    </ng-container>
+
+    <!-- Template para Cita Motivacional -->
+    <ng-container *ngIf="api === 'quote'">
+      <p>"{{ data.content }}"</p>
+      <p><em>- {{ data.author }}</em></p>
+    </ng-container>
+
+    <!-- NUEVO: Template para Colores -->
+    <ng-container *ngIf="api === 'colors'">
+      <h3>{{ data.title }}</h3>
+      <div class="color-swatch" [style.background-color]="'#' + data.hex"></div>
+      <p>HEX: #{{ data.hex }}</p>
+      <ion-img [src]="data.imageUrl" alt="Paleta de colores"></ion-img>
+    </ng-container>
+
+    <!-- Template para Chiste con Mascota -->
+    <ng-container *ngIf="api === 'combo'">
+      <p>{{ data.joke.joke || (data.joke.setup + ' - ' + data.joke.delivery) }}</p>
+      <ion-img [src]="data.type === 'cat' ? data.animal.url : data.animal.message"></ion-img>
+    </ng-container>
+
+    <ion-button expand="full" (click)="saveFavorite()">
+      <ion-icon slot="start" name="heart"></ion-icon>
+      Guardar en Favoritos
+    </ion-button>
+  </ion-card-content>
+</ion-card>

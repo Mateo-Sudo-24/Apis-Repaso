@@ -1,0 +1,46 @@
+<ion-content>
+  <div class="login-container" [class.register-mode]="isRegister">
+    <ion-icon name="camera-outline" class="login-icon"></ion-icon>
+
+    <h2>{{ isRegister ? 'Crear Cuenta' : 'Iniciar Sesión' }}</h2>
+
+    <!-- Campo de Email -->
+    <ion-item class="login-input">
+      <ion-icon slot="start" name="person-outline"></ion-icon>
+      <ion-input placeholder="Email" type="email" [(ngModel)]="email"></ion-input>
+    </ion-item>
+
+    <!-- Campo de Contraseña -->
+    <ion-item class="login-input">
+      <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
+      <ion-input placeholder="Contraseña" type="password" [(ngModel)]="password"></ion-input>
+    </ion-item>
+
+    <!-- Campo para Confirmar Contraseña (solo en modo registro) -->
+    <div *ngIf="isRegister" class="extra-info">
+      <ion-item class="login-input">
+        <ion-icon slot="start" name="lock-open-outline"></ion-icon>
+        <!-- Importante: Este campo necesitará su propio ngModel si quieres validar la contraseña -->
+        <ion-input placeholder="Confirmar Contraseña" type="password"></ion-input>
+      </ion-item>
+    </div>
+
+    <!-- Opciones de Login (solo en modo login) -->
+    <div class="login-options" *ngIf="!isRegister">
+      <ion-checkbox></ion-checkbox>
+      <span>Recordarme</span>
+      <a class="forgot-link" href="#">¿Olvidaste tu contraseña?</a>
+    </div>
+
+    <!-- BOTÓN PRINCIPAL - AQUÍ ESTABA EL ERROR -->
+    <!-- Se ha añadido (click)="handleSubmit()" -->
+    <ion-button expand="full" class="login-button" (click)="handleSubmit()">
+      {{ isRegister ? 'REGISTRARSE' : 'LOGIN' }}
+    </ion-button>
+
+    <!-- Botón para cambiar de modo -->
+    <ion-button expand="full" fill="clear" class="switch-button" (click)="toggleMode()">
+      {{ isRegister ? '¿Ya tienes cuenta? Inicia Sesión' : '¿No tienes cuenta? Regístrate' }}
+    </ion-button>
+  </div>
+</ion-content>

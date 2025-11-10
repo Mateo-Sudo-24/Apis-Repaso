@@ -1,0 +1,66 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Favoritos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <!-- Componente de Segmento para las pestañas -->
+  <ion-segment [value]="selectedCategory" (ionChange)="segmentChanged($event)">
+    <ion-segment-button value="all">
+      <ion-label>Todos</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="joke">
+      <ion-label>Chistes</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="cat">
+      <ion-label>Gatos</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="dog">
+      <ion-label>Perros</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="quote">
+      <ion-label>Citas</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <ion-list *ngIf="favorites$ | async as favorites; else noFavorites">
+    <!-- Contenedor para mostrar los favoritos filtrados -->
+    <ng-container *ngFor="let fav of favorites">
+      <!-- La magia está aquí: el *ngIf comprueba la categoría seleccionada -->
+      <ion-item *ngIf="selectedCategory === 'all' || fav.api === selectedCategory">
+        <ion-label>
+          <!-- Muestra el tipo de API (joke, cat, etc.) -->
+          <h2>{{ fav.api | titlecase }}</h2> 
+          
+          <!-- Contenido para Chistes y Chistes con Mascota -->
+          <p *ngIf="fav.joke">{{ fav.joke.joke || (fav.joke.setup + ' - ' + fav.joke.delivery) }}</p>
+          <p *ngIf="fav.api === 'joke' && !fav.joke">{{ fav.setup + ' - ' + fav.delivery }}</p>
+
+          <!-- Contenido para Citas -->
+          <p *ngIf="fav.content">"{{ fav.content }}" - {{ fav.author }}</p>
+          
+          <!-- Contenido para Imágenes (gatos, perros, o combo) -->
+          <ion-img *ngIf="fav.url" [src]="fav.url"></ion-img> <!-- Gatos -->
+          <ion-img *ngIf="fav.message" [src]="fav.message"></ion-img> <!-- Perros -->
+          <ion-img *ngIf="fav.animal" [src]="fav.animal.url || fav.animal.message"></ion-img> <!-- Combo -->
+
+        </ion-label>
+        <ion-button slot="end" color="danger" (click)="removeFavorite(fav.id)">
+          <ion-icon name="trash-outline"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </ng-container>
+  </ion-list>
+
+  <ng-template #noFavorites>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>No tienes favoritos aún</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>Guarda chistes o imágenes desde el Dashboard para verlos aquí.</p>
+      </ion-card-content>
+    </ion-card>
+  </ng-template>
+</ion-content>

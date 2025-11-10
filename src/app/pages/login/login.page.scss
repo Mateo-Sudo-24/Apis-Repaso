@@ -1,0 +1,123 @@
+/*
+ * La clave para centrar el contenido en ion-content es usar ::part(scroll).
+ * Este pseudo-elemento nos da acceso al contenedor interno que se puede
+ * desplazar, permitiéndonos aplicar flexbox para centrar sus hijos.
+*/
+ion-content {
+  // El fondo se aplica al componente principal
+  --background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+
+  // Centramos el contenido usando flexbox en la parte interna del scroll
+  &::part(scroll) {
+    display: flex;
+    justify-content: center; // Centrado horizontal
+    align-items: center;    // Centrado vertical
+    height: 100%;
+  }
+}
+
+/*
+ * Contenedor principal del formulario.
+ * Anidamos todos los estilos relacionados para mantener el código organizado.
+*/
+.login-container {
+  width: 90%;
+  max-width: 350px;
+  padding: 30px;
+  border-radius: 20px;
+  backdrop-filter: blur(20px);
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: fadeIn 0.6s ease-in-out;
+  transition: transform 0.4s ease;
+
+  // Estilos para el ícono principal
+  .login-icon {
+    font-size: 60px;
+    color: #00bfff;
+    margin-bottom: 15px;
+  }
+
+  // Estilos para el título
+  h2 {
+    margin-bottom: 20px;
+    color: #e0f7ff;
+    font-weight: 600;
+  }
+
+  // Estilos para los campos de entrada
+  .login-input {
+    --background: rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    margin-bottom: 15px;
+    color: white;
+
+    ion-input {
+      color: white;
+    }
+  }
+
+  // Contenedor para "Recordarme" y "Olvidé contraseña"
+  .login-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    width: 100%;
+    color: #b0c4de;
+    margin-top: 5px;
+
+    .forgot-link {
+      color: #87cefa;
+      text-decoration: none;
+    }
+  }
+
+  // Botón principal de acción (Login/Registrarse)
+  .login-button {
+    --background: linear-gradient(90deg, #1e90ff, #00bfff);
+    --border-radius: 10px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 12px rgba(0, 191, 255, 0.4);
+    margin-top: 20px;
+    transition: 0.3s;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 191, 255, 0.6);
+    }
+  }
+
+  // Botón para cambiar entre login y registro
+  .switch-button {
+    color: #87cefa;
+    font-size: 14px;
+    margin-top: 10px;
+  }
+}
+
+// Animación de entrada
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Estilos para pantallas con poca altura
+@media (max-height: 600px) {
+  .login-container {
+    padding: 20px;
+    max-width: 300px;
+  }
+}

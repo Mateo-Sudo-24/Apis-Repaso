@@ -1,0 +1,51 @@
+// Coincide con el estilo del Dashboard
+ion-content {
+  --background: #1e1f29;
+}
+
+ion-toolbar {
+  --background: #282a36;
+  --color: #f8f8f2;
+}
+
+// Estilos para las pestañas (ion-segment)
+ion-segment {
+  background: #282a36;
+  border-radius: 8px;
+  margin: 16px;
+}
+
+ion-segment-button {
+  --color: #f8f8f2;
+  --color-checked: #50fa7b; // Color de acento para la pestaña activa
+  --indicator-color: #50fa7b;
+}
+
+// Estilos para la lista de favoritos
+ion-list {
+  background: transparent;
+  padding: 0 16px;
+}
+
+ion-item {
+  --background: #44475a;
+  --color: #f8f8f2;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+
+  h2 {
+    font-weight: bold;
+    color: #bd93f9;
+  }
+
+  p {
+    white-space: normal;
+  }
+}
+
+ion-img {
+  max-width: 100%;
+  border-radius: 8px;
+  margin-top: 8px;
+}
